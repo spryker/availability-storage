@@ -1,11 +1,14 @@
-# Spryker Commerce OS
+# AvailabilityStorage Module
+[![Build Status](https://travis-ci.org/spryker/AvailabilityStorage.svg)](https://travis-ci.org/spryker/AvailabilityStorage)
+[![Coverage Status](https://coveralls.io/repos/github/spryker/AvailabilityStorage/badge.svg)](https://coveralls.io/github/spryker/AvailabilityStorage)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spryker/AvailabilityStorage/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spryker/AvailabilityStorage/?branch=master)
 
-## Core Modules
+## Installation
 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spryker/spryker-core/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spryker/spryker-core/?branch=master)
+```
+composer require spryker/availability-storage
+```
 
-### Links
-- **[Spryker Documentation](https://academy.spryker.com/)**
-- [Spryker Architecture-Sniffer](https://github.com/spryker/architecture-sniffer)
-- [Spryker Code-Sniffer](https://github.com/spryker/code-sniffer)
-- [Spryker Code-Generator](https://github.com/spryker/code-generator)
+## Documentation
+
+[Spryker Documentation](https://spryker.github.io)
