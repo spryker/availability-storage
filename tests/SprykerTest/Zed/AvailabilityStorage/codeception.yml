@@ -13,8 +13,8 @@ coverage:
 
 suites:
     Business:
-        path: Business
-        class_name: AvailabilityStorageBusinessTester
+        path: Communication
+        class_name: AvailabilityStorageCommunicationTester
         modules:
             enabled:
                 - Asserts
