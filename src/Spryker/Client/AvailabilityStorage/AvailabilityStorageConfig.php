@@ -17,6 +17,6 @@ class AvailabilityStorageConfig
      */
     public static function isCollectorCompatibilityMode()
     {
-        return true;
+        return false;
     }
 }
