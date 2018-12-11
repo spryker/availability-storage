@@ -7,20 +7,17 @@
 
 namespace Spryker\Zed\AvailabilityStorage\Communication\Plugin\Event\Listener;
 
-use Spryker\Zed\Availability\Dependency\AvailabilityEvents;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
- * @deprecated Use `\Spryker\Zed\AvailabilityStorage\Communication\Plugin\Event\Listener\AvailabilityStoragePublishListener` and `Spryker\Zed\AvailabilityStorage\Communication\Plugin\Event\Listener\AvailabilityStorageUnPublishListener` instead.
- *
  * @method \Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\AvailabilityStorage\Communication\AvailabilityStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\AvailabilityStorage\Business\AvailabilityStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\AvailabilityStorage\AvailabilityStorageConfig getConfig()
  */
-class AvailabilityStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
+class AvailabilityStoragePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -36,14 +33,6 @@ class AvailabilityStorageListener extends AbstractPlugin implements EventBulkHan
     {
         $this->preventTransaction();
         $availabilityIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
-
-        if ($eventName === AvailabilityEvents::ENTITY_SPY_AVAILABILITY_ABSTRACT_DELETE ||
-            $eventName === AvailabilityEvents::AVAILABILITY_ABSTRACT_UNPUBLISH
-        ) {
-            $this->getFacade()->unpublish($availabilityIds);
-
-            return;
-        }
 
         $this->getFacade()->publish($availabilityIds);
     }
