@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\AvailabilityStorage\Expander;
 
+use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
+use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\AvailabilityStorage\Storage\AvailabilityStorageReaderInterface;
 
@@ -41,24 +43,28 @@ class ProductViewAvailabilityExpander implements ProductViewAvailabilityExpander
      */
     public function expandProductViewWithAvailability(ProductViewTransfer $productViewTransfer): ProductViewTransfer
     {
-        $storageAvailabilityTransfer = $this->availabilityStorageReader
-            ->getAvailabilityAbstractAsStorageTransfer($productViewTransfer->getIdProductAbstract());
-
-        if (!$productViewTransfer->getIdProductConcrete()) {
-            $productViewTransfer->setAvailable($storageAvailabilityTransfer->getIsAbstractProductAvailable());
+        if (!$productViewTransfer->getIdProductAbstract()) {
+            $productViewTransfer->setAvailable(false);
 
             return $productViewTransfer;
         }
 
-        $concreteProductAvailableItems = $storageAvailabilityTransfer->getConcreteProductAvailableItems();
+        $productAbstractAvailabilityTransfer = $this->availabilityStorageReader
+            ->findAbstractProductAvailability($productViewTransfer->getIdProductAbstractOrFail());
 
-        if (isset($concreteProductAvailableItems[$productViewTransfer->getSku()])) {
-            $productViewTransfer->setAvailable($concreteProductAvailableItems[$productViewTransfer->getSku()]);
+        if ($productAbstractAvailabilityTransfer === null) {
+            $productViewTransfer->setAvailable(false);
+
+            return $productViewTransfer;
         }
 
-        $productViewTransfer = $this->executeAvailabilityStorageStrategyPlugins($productViewTransfer);
+        if (!$productViewTransfer->getIdProductConcrete()) {
+            return $productViewTransfer->setAvailable($productAbstractAvailabilityTransfer->getAvailabilityOrFail()->greaterThan(0));
+        }
 
-        return $productViewTransfer;
+        $productViewTransfer = $this->expandProductViewTransferWithConcreteAvailability($productViewTransfer, $productAbstractAvailabilityTransfer);
+
+        return $this->executeAvailabilityStorageStrategyPlugins($productViewTransfer);
     }
 
     /**
@@ -79,5 +85,39 @@ class ProductViewAvailabilityExpander implements ProductViewAvailabilityExpander
         }
 
         return $productViewTransfer;
+    }
+
+    protected function expandProductViewTransferWithConcreteAvailability(
+        ProductViewTransfer $productViewTransfer,
+        ProductAbstractAvailabilityTransfer $productAbstractAvailabilityTransfer
+    ): ProductViewTransfer {
+        $productConcreteAvailabilityTransfer = $this->findProductConcreteAvailabilityTransfer(
+            $productViewTransfer,
+            $productAbstractAvailabilityTransfer,
+        );
+
+        if ($productConcreteAvailabilityTransfer === null) {
+            return $productViewTransfer;
+        }
+
+        $availability = $productConcreteAvailabilityTransfer->getAvailability();
+        $isNeverOutOfStock = $productConcreteAvailabilityTransfer->getIsNeverOutOfStock() ?? false;
+
+        return $productViewTransfer->setAvailable($isNeverOutOfStock || $availability?->greaterThan(0))
+            ->setIsNeverOutOfStock($isNeverOutOfStock)
+            ->setStockQuantity($availability?->toFloat());
+    }
+
+    protected function findProductConcreteAvailabilityTransfer(
+        ProductViewTransfer $productViewTransfer,
+        ProductAbstractAvailabilityTransfer $productAbstractAvailabilityTransfer
+    ): ?ProductConcreteAvailabilityTransfer {
+        foreach ($productAbstractAvailabilityTransfer->getProductConcreteAvailabilities() as $productConcreteAvailabilityTransfer) {
+            if ($productConcreteAvailabilityTransfer->getSku() === $productViewTransfer->getSku()) {
+                return $productConcreteAvailabilityTransfer;
+            }
+        }
+
+        return null;
     }
 }

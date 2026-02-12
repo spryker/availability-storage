@@ -4,8 +4,10 @@
     <transfer name="ProductView">
         <property name="idProductAbstract" type="int"/>
         <property name="idProductConcrete" type="int"/>
-        <property name="available" type="bool"/>
         <property name="sku" type="string"/>
+        <property name="available" type="bool"/>
+        <property name="stockQuantity" type="float" strict="true"/>
+        <property name="isNeverOutOfStock" type="bool" strict="true"/>
     </transfer>
 
     <transfer name="StorageAvailability">
