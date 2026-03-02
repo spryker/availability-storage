@@ -38,12 +38,6 @@ class AvailabilityStorageMapper implements AvailabilityStorageMapperInterface
      */
     protected const KEY_ABSTRACT_SKU = 'abstract_sku';
 
-    /**
-     * @param array $availabilityStorageData
-     * @param \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer $productAbstractAvailabilityTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
-     */
     public function mapAvailabilityStorageDataToProductAbstractAvailabilityTransfer(
         array $availabilityStorageData,
         ProductAbstractAvailabilityTransfer $productAbstractAvailabilityTransfer

@@ -36,11 +36,6 @@ class ProductViewAvailabilityExpander implements ProductViewAvailabilityExpander
         $this->availabilityStorageStrategyPlugins = $availabilityStorageStrategyPlugins;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer
-     */
     public function expandProductViewWithAvailability(ProductViewTransfer $productViewTransfer): ProductViewTransfer
     {
         if (!$productViewTransfer->getIdProductAbstract()) {
@@ -67,11 +62,6 @@ class ProductViewAvailabilityExpander implements ProductViewAvailabilityExpander
         return $this->executeAvailabilityStorageStrategyPlugins($productViewTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer
-     */
     protected function executeAvailabilityStorageStrategyPlugins(ProductViewTransfer $productViewTransfer): ProductViewTransfer
     {
         foreach ($this->availabilityStorageStrategyPlugins as $availabilityStorageStrategyPlugin) {

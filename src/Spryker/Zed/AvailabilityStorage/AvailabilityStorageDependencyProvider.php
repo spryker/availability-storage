@@ -73,11 +73,6 @@ class AvailabilityStorageDependencyProvider extends AbstractBundleDependencyProv
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addProductAbstractPropelQuery(Container $container): Container
     {
         $container->set(static::PROPEL_QUERY_PRODUCT_ABSTRACT, $container->factory(function (): SpyProductAbstractQuery {

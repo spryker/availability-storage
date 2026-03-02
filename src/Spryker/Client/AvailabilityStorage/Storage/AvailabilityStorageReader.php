@@ -53,12 +53,6 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
      */
     protected $storeClient;
 
-    /**
-     * @param \Spryker\Client\AvailabilityStorage\Dependency\Client\AvailabilityStorageToStorageClientInterface $storageClient
-     * @param \Spryker\Client\AvailabilityStorage\Dependency\Service\AvailabilityStorageToSynchronizationServiceInterface $synchronizationService
-     * @param \Spryker\Client\AvailabilityStorage\Mapper\AvailabilityStorageMapperInterface $availabilityStorageMapper
-     * @param \Spryker\Client\AvailabilityStorage\Dependency\Client\AvailabilityStorageToStoreClientInterface $storeClient
-     */
     public function __construct(
         AvailabilityStorageToStorageClientInterface $storageClient,
         AvailabilityStorageToSynchronizationServiceInterface $synchronizationService,
@@ -101,33 +95,18 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
         return $storageAvailabilityTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer $spyAvailabilityAbstractTransfer
-     *
-     * @return bool
-     */
     protected function isProductAbstractAvailable(SpyAvailabilityAbstractEntityTransfer $spyAvailabilityAbstractTransfer): bool
     {
         return $spyAvailabilityAbstractTransfer->getQuantity() !== null &&
             $spyAvailabilityAbstractTransfer->getQuantity()->greaterThan(0);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SpyAvailabilityEntityTransfer $spyAvailability
-     *
-     * @return bool
-     */
     protected function isProductConcreteAvailable(SpyAvailabilityEntityTransfer $spyAvailability): bool
     {
         return $spyAvailability->getIsNeverOutOfStock() ||
             ($spyAvailability->getQuantity() !== null && $spyAvailability->getQuantity()->greaterThan(0));
     }
 
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
-     */
     public function findAbstractProductAvailability(int $idProductAbstract): ?ProductAbstractAvailabilityTransfer
     {
         $availabilityStorageData = $this->storageClient->get(
@@ -203,9 +182,6 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
         return $this->getStorageKeyBuilder()->generateKey($synchronizationDataTransfer);
     }
 
-    /**
-     * @return string
-     */
     protected function getStoreName(): string
     {
         if (static::$storeName === null) {
@@ -215,9 +191,6 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
         return static::$storeName;
     }
 
-    /**
-     * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface
-     */
     protected function getStorageKeyBuilder(): SynchronizationKeyGeneratorPluginInterface
     {
         if (static::$storageKeyBuilder === null) {

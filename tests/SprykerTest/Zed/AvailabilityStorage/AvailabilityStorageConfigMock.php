@@ -11,9 +11,6 @@ use Spryker\Zed\AvailabilityStorage\AvailabilityStorageConfig;
 
 class AvailabilityStorageConfigMock extends AvailabilityStorageConfig
 {
-    /**
-     * @return bool
-     */
     public function isSendingToQueue(): bool
     {
         return false;

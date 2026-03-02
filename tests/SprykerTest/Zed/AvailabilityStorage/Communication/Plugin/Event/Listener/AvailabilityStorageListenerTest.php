@@ -57,9 +57,6 @@ class AvailabilityStorageListenerTest extends Unit
      */
     protected $tester;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -72,9 +69,6 @@ class AvailabilityStorageListenerTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testAvailabilityStorageListenerStoreData(): void
     {
         SpyAvailabilityStorageQuery::create()->filterByFkProductAbstract($this->productConcreteTransfer->getFkProductAbstract())->delete();
@@ -95,9 +89,6 @@ class AvailabilityStorageListenerTest extends Unit
         $this->assertAvailabilityStorage($availabilityStorageCount);
     }
 
-    /**
-     * @return void
-     */
     public function testAvailabilityStoragePublishListenerStoreData(): void
     {
         SpyAvailabilityStorageQuery::create()->filterByFkProductAbstract($this->productConcreteTransfer->getFkProductAbstract())->delete();
@@ -118,9 +109,6 @@ class AvailabilityStorageListenerTest extends Unit
         $this->assertAvailabilityStorage($availabilityStorageCount);
     }
 
-    /**
-     * @return void
-     */
     public function testAvailabilityStorageUnpublishListenerStoreData(): void
     {
         // Act
@@ -137,9 +125,6 @@ class AvailabilityStorageListenerTest extends Unit
         $this->assertSame(0, SpyAvailabilityStorageQuery::create()->filterByFkProductAbstract($this->productConcreteTransfer->getFkProductAbstract())->count());
     }
 
-    /**
-     * @return void
-     */
     public function testAvailabilityProductStorageListenerStoreData(): void
     {
         SpyAvailabilityStorageQuery::create()->filterByFkProductAbstract($this->productConcreteTransfer->getFkProductAbstract())->delete();
@@ -160,9 +145,6 @@ class AvailabilityStorageListenerTest extends Unit
         $this->assertAvailabilityStorage($availabilityStorageCount);
     }
 
-    /**
-     * @return \Spryker\Zed\AvailabilityStorage\Business\AvailabilityStorageFacade
-     */
     protected function getAvailabilityStorageFacade(): AvailabilityStorageFacade
     {
         $factory = new AvailabilityStorageBusinessFactory();
@@ -174,11 +156,6 @@ class AvailabilityStorageListenerTest extends Unit
         return $facade;
     }
 
-    /**
-     * @param int $previousCount
-     *
-     * @return void
-     */
     protected function assertAvailabilityStorage(int $previousCount): void
     {
         $availabilityStorageCount = SpyAvailabilityStorageQuery::create()->count();

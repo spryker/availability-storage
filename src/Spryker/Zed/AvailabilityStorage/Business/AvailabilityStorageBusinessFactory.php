@@ -18,9 +18,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class AvailabilityStorageBusinessFactory extends AbstractBusinessFactory
 {
-    /**
-     * @return \Spryker\Zed\AvailabilityStorage\Business\Storage\AvailabilityStorageInterface
-     */
     public function createAvailabilityStorage(): AvailabilityStorageInterface
     {
         return new AvailabilityStorage(

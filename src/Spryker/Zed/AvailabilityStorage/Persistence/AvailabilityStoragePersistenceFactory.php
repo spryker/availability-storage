@@ -27,9 +27,6 @@ class AvailabilityStoragePersistenceFactory extends AbstractPersistenceFactory
         return SpyAvailabilityStorageQuery::create();
     }
 
-    /**
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
-     */
     public function getProductAbstractPropelQuery(): SpyProductAbstractQuery
     {
         return $this->getProvidedDependency(AvailabilityStorageDependencyProvider::PROPEL_QUERY_PRODUCT_ABSTRACT);

@@ -73,11 +73,6 @@ class AvailabilityStorageEventSubscriber extends AbstractPlugin implements Event
         $eventCollection->addListenerQueued(AvailabilityEvents::AVAILABILITY_ABSTRACT_PUBLISH, new AvailabilityStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
-    /**
-     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
-     *
-     * @return void
-     */
     protected function addAvailabilityProductAbstractPublishListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection->addListenerQueued(static::AVAILABILITY_PRODUCT_ABSTRACT_PUBLISH, new AvailabilityProductAbstractStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
@@ -93,11 +88,6 @@ class AvailabilityStorageEventSubscriber extends AbstractPlugin implements Event
         $eventCollection->addListenerQueued(AvailabilityEvents::AVAILABILITY_ABSTRACT_UNPUBLISH, new AvailabilityStorageUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
-    /**
-     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
-     *
-     * @return void
-     */
     protected function addAvailabilityProductAbstractUnPublishListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection->addListenerQueued(static::AVAILABILITY_PRODUCT_ABSTRACT_UNPUBLISH, new AvailabilityProductAbstractStorageUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());

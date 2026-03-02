@@ -11,12 +11,6 @@ use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
 
 interface AvailabilityStorageMapperInterface
 {
-    /**
-     * @param array $availabilityStorageData
-     * @param \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer $productAbstractAvailabilityTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
-     */
     public function mapAvailabilityStorageDataToProductAbstractAvailabilityTransfer(
         array $availabilityStorageData,
         ProductAbstractAvailabilityTransfer $productAbstractAvailabilityTransfer

@@ -18,9 +18,6 @@ use Spryker\Client\Kernel\AbstractFactory;
 
 class AvailabilityStorageFactory extends AbstractFactory
 {
-    /**
-     * @return \Spryker\Client\AvailabilityStorage\Storage\AvailabilityStorageReaderInterface
-     */
     public function createAvailabilityStorageReader(): AvailabilityStorageReaderInterface
     {
         return new AvailabilityStorageReader(
@@ -31,17 +28,11 @@ class AvailabilityStorageFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \Spryker\Client\AvailabilityStorage\Mapper\AvailabilityStorageMapperInterface
-     */
     public function createAvailabilityStorageMapper(): AvailabilityStorageMapperInterface
     {
         return new AvailabilityStorageMapper();
     }
 
-    /**
-     * @return \Spryker\Client\AvailabilityStorage\Expander\ProductViewAvailabilityExpanderInterface
-     */
     public function createProductViewAvailabilityExpander(): ProductViewAvailabilityExpanderInterface
     {
         return new ProductViewAvailabilityExpander(
@@ -74,9 +65,6 @@ class AvailabilityStorageFactory extends AbstractFactory
         return $this->getProvidedDependency(AvailabilityStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
     }
 
-    /**
-     * @return \Spryker\Client\AvailabilityStorage\Dependency\Client\AvailabilityStorageToStoreClientInterface
-     */
     public function getStoreClient(): AvailabilityStorageToStoreClientInterface
     {
         return $this->getProvidedDependency(AvailabilityStorageDependencyProvider::CLIENT_STORE);

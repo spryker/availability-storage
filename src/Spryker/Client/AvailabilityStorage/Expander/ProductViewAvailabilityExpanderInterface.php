@@ -11,10 +11,5 @@ use Generated\Shared\Transfer\ProductViewTransfer;
 
 interface ProductViewAvailabilityExpanderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer
-     */
     public function expandProductViewWithAvailability(ProductViewTransfer $productViewTransfer): ProductViewTransfer;
 }
