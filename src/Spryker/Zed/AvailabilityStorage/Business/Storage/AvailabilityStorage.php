@@ -10,9 +10,12 @@ namespace Spryker\Zed\AvailabilityStorage\Business\Storage;
 use Orm\Zed\AvailabilityStorage\Persistence\SpyAvailabilityStorage;
 use Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageQueryContainerInterface;
 use Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageRepositoryInterface;
+use Spryker\Zed\Propel\Persistence\BatchProcessor\ActiveRecordBatchProcessorTrait;
 
 class AvailabilityStorage implements AvailabilityStorageInterface
 {
+    use ActiveRecordBatchProcessorTrait;
+
     /**
      * @var string
      */
@@ -138,6 +141,7 @@ class AvailabilityStorage implements AvailabilityStorageInterface
 
             $this->storeDataSet($availability);
         }
+        $this->commit();
     }
 
     /**
@@ -159,7 +163,7 @@ class AvailabilityStorage implements AvailabilityStorageInterface
             ->setStore($storeName)
             ->setIsSendingToQueue($this->isSendingToQueue);
 
-        $availabilityStorageEntity->save();
+        $this->persist($availabilityStorageEntity);
     }
 
     /**
