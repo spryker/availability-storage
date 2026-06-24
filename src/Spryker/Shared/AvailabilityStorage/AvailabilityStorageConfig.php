@@ -12,6 +12,8 @@ use Spryker\Shared\Kernel\AbstractBundleConfig;
 class AvailabilityStorageConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * Defines queue name that as used for asynchronous event handling.
      *
      * @var string
