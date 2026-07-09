@@ -50,7 +50,7 @@ class ProductViewAvailabilityExpander implements ProductViewAvailabilityExpander
         if ($productAbstractAvailabilityTransfer === null) {
             $productViewTransfer->setAvailable(false);
 
-            return $productViewTransfer;
+            return $this->executeAvailabilityStorageStrategyPlugins($productViewTransfer);
         }
 
         if (!$productViewTransfer->getIdProductConcrete()) {

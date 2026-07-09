@@ -56,9 +56,7 @@ class ProductViewAvailabilityStorageExpanderPluginTest extends Unit
     {
         $this->storageClientMock->method('get')->willReturnCallback(fn () => $storageData);
 
-        if ($strategyPlugins) {
-            $this->tester->setDependency(AvailabilityStorageDependencyProvider::PLUGINS_AVAILABILITY_STORAGE_STRATEGY, $strategyPlugins);
-        }
+        $this->tester->setDependency(AvailabilityStorageDependencyProvider::PLUGINS_AVAILABILITY_STORAGE_STRATEGY, $strategyPlugins ?? []);
     }
 
     /**
@@ -134,6 +132,49 @@ class ProductViewAvailabilityStorageExpanderPluginTest extends Unit
 
         // Assert
         $this->assertSame($expectedAvailable, $result->getAvailable());
+    }
+
+    public function testGivenMissingAbstractAvailabilityWhenStrategyPluginReportsAvailableThenProductViewIsAvailable(): void
+    {
+        // Arrange
+        $productViewTransfer = (new ProductViewTransfer())
+            ->setIdProductAbstract(231)
+            ->setIdProductConcrete(331)
+            ->setSku('offer-only-sku');
+
+        $strategyPlugin = $this->createMock(AvailabilityStorageStrategyPluginInterface::class);
+        $strategyPlugin->method('isApplicable')->willReturn(true);
+        $strategyPlugin->method('isProductAvailable')->willReturn(true);
+
+        $this->setUpDependencies(null, [$strategyPlugin]);
+
+        // Act
+        $result = (new ProductViewAvailabilityStorageExpanderPlugin())
+            ->expandProductViewTransfer($productViewTransfer, [], 'en_US');
+
+        // Assert
+        $this->assertTrue($result->getAvailable());
+    }
+
+    public function testGivenMissingAbstractAvailabilityWhenNoStrategyPluginIsApplicableThenProductViewIsUnavailable(): void
+    {
+        // Arrange
+        $productViewTransfer = (new ProductViewTransfer())
+            ->setIdProductAbstract(231)
+            ->setIdProductConcrete(331)
+            ->setSku('offer-only-sku');
+
+        $strategyPlugin = $this->createMock(AvailabilityStorageStrategyPluginInterface::class);
+        $strategyPlugin->method('isApplicable')->willReturn(false);
+
+        $this->setUpDependencies(null, [$strategyPlugin]);
+
+        // Act
+        $result = (new ProductViewAvailabilityStorageExpanderPlugin())
+            ->expandProductViewTransfer($productViewTransfer, [], 'en_US');
+
+        // Assert
+        $this->assertFalse($result->getAvailable());
     }
 
     public function testExpandProductViewTransferWhenStorageReaderReturnsNull(): void
