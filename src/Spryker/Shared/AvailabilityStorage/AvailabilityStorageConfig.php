@@ -7,9 +7,9 @@
 
 namespace Spryker\Shared\AvailabilityStorage;
 
-use Spryker\Shared\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Kernel\AbstractSharedConfig;
 
-class AvailabilityStorageConfig extends AbstractBundleConfig
+class AvailabilityStorageConfig extends AbstractSharedConfig
 {
     /**
      * @api
